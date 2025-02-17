@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tamimah's Portfolio</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4caff1;
+            --secondary-color: #3498db;
+            --text-color: #333;
+            --border-color: #fff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+        }
+
+        /* Background wrapper for blur effect */
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('img/back_coding.avif') center/cover no-repeat;
+            filter: blur(4px);
+            transform: scale(1.1); /* Prevent blur edges */
+        }
+
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden; /* Prevent blur overflow */
+        }
+
+        /* Blue overlay */
+        .header-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(33, 150, 243, 0.7);
+            z-index: 1;
+        }
+
+        .header-content {
+            max-width: 800px;
+            padding: 2rem;
+            position: relative;
+            z-index: 2;
+            color: white;
+        }
+
+        h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+        }
+
+        .explore-btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: transparent;
+            color: white;
+            text-decoration: none;
+            border: 2px solid white;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            background: rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+        }
+
+        .explore-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            border: 3px solid var(--border-color);
+        }
+
+        #about {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f8f9fa;
+            padding: 4rem 2rem;
+        }
+
+        .about-content {
+            max-width: 800px;
+            text-align: center;
+        }
+
+        .about-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--secondary-color);
+        }
+
+        .about-content p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 1.5rem;
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .skill-badge {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        section {
+            margin: 3rem 0;
+        }
+
+        h1, h2 {
+            margin-bottom: 1rem;
+        }
+
+        .social-links {
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            margin: 0 0.5rem;
+            text-decoration: none;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .project-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .project-info {
+            padding: 1.5rem;
+        }
+
+        .tech-stack {
+            margin-top: 0.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tech-badge {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+
+        footer {
+            background-color: var(--secondary-color);
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            margin-top: 3rem;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            position: relative;
+            background-color: white;
+            width: 90%;
+            max-width: 800px;
+            margin: 2% auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .close-btn {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+            transition: color 0.3s ease;
+        }
+
+        .close-btn:hover {
+            color: #2196F3;
+        }
+
+        .project-images {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+            overflow-x: auto;
+            padding: 10px 0;
+        }
+
+        .project-image {
+            flex: 0 0 auto;
+            width: 200px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 20px 0;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #ddd;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .dot.active {
+            background-color: #2196F3;
+        }
+
+        .modal-tech-stack {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .modal-tech {
+            background-color: #f0f0f0;
+            color: #2196F3;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+        }
+
+        .view-project-btn {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background-color: #2196F3;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-top: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .view-project-btn:hover {
+            background-color: #1976D2;
+        }
+
+        @media (max-width: 768px) {
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-bg"></div>
+        <div class="header-overlay"></div>
+        <div class="header-content">
+            <img src="img/avatar_tami.jpeg" alt="Profile Picture" class="profile-img">
+        <h1>Tamimah Zulafa</h1>
+        <p class="subtitle">Android Developer</p>
+        <div class="social-links">
+            <a href="https://github.com/tamizna"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/tamimah-zulafa"><i class="fab fa-linkedin"></i></a>
+            <a href="mailto:tamimahzulafa@example.com"><i class="fas fa-envelope"></i></a>
+        </div>
+        <br>
+        <button class="explore-btn" onclick="scrollToAbout()">
+            Explore <i class="fas fa-chevron-down chevron-down"></i>
+        </button>
+        </div>
+    </header>
+
+    <main class="container">
+        <section id="about">
+            <div class="about-content">
+                <h2>About Me</h2>
+            <p>Hi! I’m an Android Developer with 5 years of experience, dedicated to crafting smooth, functional, and engaging mobile applications. Whether it’s optimizing performance, refining UI/UX, or implementing the latest Android features, I love bringing ideas to life. Let’s build something awesome together!</p>
+            <br><br>
+            <div class="skills">
+                <span class="skill-badge">Kotlin</span>
+                <span class="skill-badge">Java</span>
+                <span class="skill-badge">Flutter</span>
+                <span class="skill-badge">Android</span>
+                <span class="skill-badge">MVVM</span>
+                <span class="skill-badge">MVP</span>
+                <span class="skill-badge">Jetpack Compose</span>
+                <span class="skill-badge">Jetpack Components</span>
+                <span class="skill-badge">Material Design</span>
+                <span class="skill-badge">Dagger</span>
+                <span class="skill-badge">RxJava</span>
+                <span class="skill-badge">Coroutines</span>
+                <span class="skill-badge">Room</span>
+            </div>
+            </div>
+        </section>
+
+        <section id="projects">
+            <h2>Featured Projects</h2>
+            <div class="project-grid">
+                <article class="project-card">
+                    <img src="img/preview_patuhOAT.png" alt="Project Patuh OAT" class="project-img">
+                    <div class="project-info">
+                        <h3>Patuh OAT</h3>
+                        <p>Patuh OAT is an Android app that supports tuberculosis patients, doctors, families, and healthcare workers by tracking medication adherence, providing educational resources, and enabling consultations for better treatment management.</p>
+                        <div class="tech-stack">
+                            <span class="tech-badge">Java</span>
+                            <span class="tech-badge">Firebase Realtime Database</span>
+                            <span class="tech-badge">Firebase Storage</span>
+                            <span class="tech-badge">One Signal</span>
+                        </div>
+                        <button onclick="openModal('fittracker')" class="view-project-btn">See Detail</button>
+                    </div>
+                </article>
+
+                <article class="project-card">
+                    <img src="img/preview_kuma.png" alt="Project 2" class="project-img">
+                    <div class="project-info">
+                        <h3>Kuma (Kuliner Mataram)</h3>
+                        <p>E-commerce application for culinary UMKM in Mataram City</p>
+                        <div class="tech-stack">
+                            <span class="tech-badge">Kotlin</span>
+                            <span class="tech-badge">MVVM</span>
+                            <span class="tech-badge">Firebase Authentication</span>
+                            <span class="tech-badge">Firebase Realtime Database</span>
+                            <span class="tech-badge">Firebase Storage</span>
+                        </div>
+                        <button onclick="openModal('fittracker')" class="view-project-btn">See Detail</button>
+                    </div>
+                </article>
+
+                <article class="project-card">
+                    <img src="img/preview_yukbisayuk.png" alt="Project 2" class="project-img">
+                    <div class="project-info">
+                        <h3>Yuk Bisa Yuk</h3>
+                        <p>This app is intended to donate for fundraising.</p>
+                        <div class="tech-stack">
+                            <span class="tech-badge">Kotlin</span>
+                            <span class="tech-badge">MVVM</span>
+                            <span class="tech-badge">Retrofit</span>
+                        </div>
+                        <button onclick="openModal('fittracker')" class="view-project-btn">See Detail</button>
+                    </div>
+                </article>
+
+                <article class="project-card">
+                    <img src="img/preview_vehichum.png" alt="Project 2" class="project-img">
+                    <div class="project-info">
+                        <h3>Vehichum</h3>
+                        <p>This application is intended to display the location of the gas station, vehicle
+                            wash, and vehicle repair shop located in Depok.</p>
+                        <div class="tech-stack">
+                            <span class="tech-badge">Java</span>
+                            <span class="tech-badge">Google Maps SDK</span>
+                            <span class="tech-badge">Firebase Realtime Database</span>
+                        </div>
+                        <button onclick="openModal('fittracker')" class="view-project-btn">See Detail</button>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Tamimah Zulafa. All rights reserved.</p>
+    </footer>
+
+    <!-- Modal Dialog -->
+    <div id="projectModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2>Patuh OAT</h2>
+            
+            <div class="project-images">
+                <img src="img/preview_patuhOAT.png" alt="Screenshot 1" class="project-image">
+                <img src="img/preview_patuhOAT.png" alt="Screenshot 2" class="project-image">
+                <img src="img/preview_patuhOAT.png" alt="Screenshot 3" class="project-image">
+            </div>
+            
+            <div class="dots">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+
+            <p>Patuh OAT is an Android application aimed at supporting tuberculosis patients, doctors, families, healthcare workers, and psychologists. The application helps track patient medication adherence and provides educational resources about tuberculosis. Patients and their families can consult with doctors, healthcare workers, and psychologists about the patient’s treatment plan. Doctors can log treatment data, monitor patient adherence, and upload articles and videos to the application. Healthcare workers are responsible for assisting doctors in supervising patients and confirming daily whether the patients have taken their medication.</p>
+            
+            <div class="modal-tech-stack">
+                <span class="modal-tech">Java</span>
+                <span class="modal-tech">Firebase Realtime Database</span>
+                <span class="modal-tech">Firebase Storage</span>
+                <span class="modal-tech">One Signal</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function scrollToAbout() {
+            const aboutSection = document.getElementById('about');
+            aboutSection.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+
+        function openModal(projectId) {
+            document.getElementById('projectModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('projectModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('projectModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
